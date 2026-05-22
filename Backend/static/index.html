@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Texas Hold'em · Premium</title>
+<script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+
+<div id="menuScreen" class="screen active">
+  <div class="hdr">
+    <span class="hdr-logo">TEXAS <span>HOLD'EM</span></span>
+    <span style="margin-left:auto;color:var(--muted);font-size:.78em">Premium AZ</span>
+  </div>
+  <div class="menu-inner">
+    <div class="menu-title">TEXAS<br><span>HOLD'EM</span></div>
+    <p class="menu-sub">Online · 0.20 sentdən başlayan masalar · Min 4 oyunçu</p>
+    <div class="box">
+      <h2>Profilini Seç</h2>
+      <input class="inp" id="nameInp" placeholder="Adını yaz..." maxlength="12">
+      <div class="avatars" id="avatarPicker"></div>
+      <button class="btn btn-gold" onclick="Game.join()">Oyuna Başla</button>
+    </div>
+  </div>
+</div>
+
+<div id="gameScreen" class="screen">
+  <div class="topbar">
+    <div class="room-info" id="roomInfo">...</div>
+    <button class="btn btn-gray btn-xs" onclick="Game.leave()">Çıx</button>
+  </div>
+  
+  <div class="table-area" id="tableArea">
+    <div class="pot-area">Pot: <span id="potVal">0</span></div>
+    <div class="community-cards" id="commCards"></div>
+    <div id="seatsArea"></div>
+  </div>
+
+  <div class="controls" id="controls">
+    <div class="action-btns" id="actionBtns">
+      <button class="btn btn-gray" onclick="Game.fold()">Fold</button>
+      <button class="btn btn-blue" onclick="Game.call()">Call</button>
+      <button class="btn btn-gold" onclick="Game.raise()">Raise</button>
+    </div>
+    <div class="raise-box" id="raiseBox">
+      <div class="raise-slider">
+        <input type="range" id="raiseRange" min="0" max="1000" oninput="UI.updateRaise(this.value)">
+        <span class="raise-val" id="raiseVal">200</span>
+      </div>
+      <div class="raise-actions">
+        <button class="btn btn-gray btn-xs" onclick="UI.closeRaise()">İptal</button>
+        <button class="btn btn-gold btn-xs" onclick="Game.confirmRaise()">Raise Et!</button>
+      </div>
+    </div>
+  </div>
+  <div class="game-side" id="gameSide">
+    <div class="side-tabs">
+      <div class="side-tab active" id="tabLog" onclick="UI.switchTab('log')">Log</div>
+      <div class="side-tab" id="tabChat" onclick="UI.switchTab('chat')">Chat</div>
+    </div>
+    <div class="side-panel active" id="panelLog"></div>
+    <div class="chat-panel" id="panelChat"></div>
+    <div class="chat-input-row">
+      <input type="text" id="chatInp" placeholder="Masada yaz…" maxlength="80"
+             onkeydown="if(event.key==='Enter')Game.sendChat()">
+      <button class="chat-send" onclick="Game.sendChat()">→</button>
+    </div>
+  </div>
+</div>
+
+<div class="overlay" id="resultOverlay">
+  <div class="overlay-box">
+    <div class="overlay-title" id="overlayTitle">Nəticə</div>
+    <div id="overlayBody"></div>
+    <div class="overlay-btns">
+      <button class="btn btn-green" onclick="UI.closeOverlay()">Bağla</button>
+    </div>
+  </div>
+</div>
+
+<script src="/app.js"></script>
+</body>
+</html>
