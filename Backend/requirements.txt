@@ -1,0 +1,2 @@
+python-socketio>=5.11
+eventlet>=0.36
